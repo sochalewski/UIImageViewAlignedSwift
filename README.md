@@ -25,7 +25,7 @@ pod "UIImageViewAlignedSwift"
 It is a subclass of `UIImageView` that allows you to customize the alignment of the displayed image inside the view's frame.
 This works even if the `contentMode` is set to `AspectFit`, `AspectFill` or `ScaleToFill`.
 
-It is rewritten to Swift based on original [https://github.com/reydanro/UIImageViewAligned](UIImageViewAligned by reydanro).
+It is rewritten to Swift based on original [UIImageViewAligned by reydanro](https://github.com/reydanro/UIImageViewAligned).
 
 ## Why a subclass of UIImageView, and not a standard UIView?
 
