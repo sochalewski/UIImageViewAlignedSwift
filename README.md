@@ -1,4 +1,4 @@
-# UIImageViewAlignedSwift
+# UIImageViewAligned
 
 [![Version](https://img.shields.io/cocoapods/v/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
 [![License](https://img.shields.io/cocoapods/l/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
