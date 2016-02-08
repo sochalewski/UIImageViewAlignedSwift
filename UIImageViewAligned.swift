@@ -1,9 +1,9 @@
 //
 //  UIImageViewAligned.swift
-//  IB Rocks
+//  UIImageViewAlignedSwift
 //
 //  Created by Piotr Sochalewski on 08.02.2016.
-//  Copyright © 2016 Piotr Sochalewski.
+//  MIT License.
 //
 
 import UIKit
@@ -34,12 +34,12 @@ class UIImageViewAligned: UIImageView {
         }
     }
     override var image: UIImage? {
-        get {
-            return realImageView?.image
-        }
         set {
             realImageView?.image = newValue
             setNeedsLayout()
+        }
+        get {
+            return realImageView?.image
         }
     }
     var enableScaleUp = false
@@ -117,8 +117,6 @@ class UIImageViewAligned: UIImageView {
             return size
         }
         
-        print(realImageView?.image)
-        
         var scaleX = size.width / (realImageView?.image?.size.width)!
         var scaleY = size.height / (realImageView?.image?.size.height)!
         
@@ -166,7 +164,7 @@ class UIImageViewAligned: UIImageView {
             layer.contents = nil
         }
         get {
-            return true
+            return super.highlighted
         }
     }
     
