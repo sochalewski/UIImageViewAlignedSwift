@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct UIImageViewAlignmentMask: OptionSetType {
+public struct UIImageViewAlignmentMask: OptionSetType {
     
     let rawValue: Int
     init(rawValue: Int) { self.rawValue = rawValue }
@@ -25,7 +25,7 @@ struct UIImageViewAlignmentMask: OptionSetType {
     
 }
 
-class UIImageViewAligned: UIImageView {
+public class UIImageViewAligned: UIImageView {
     
     var alignment: UIImageViewAlignmentMask = .Center {
         didSet {
@@ -69,7 +69,7 @@ class UIImageViewAligned: UIImageView {
         commonInit()
     }
     
-    func commonInit() {
+    private func commonInit() {
         realImageView = UIImageView(frame: bounds)
         realImageView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         realImageView?.contentMode = contentMode
