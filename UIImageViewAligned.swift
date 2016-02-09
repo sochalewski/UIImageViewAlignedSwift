@@ -11,7 +11,7 @@ import UIKit
 public struct UIImageViewAlignmentMask: OptionSetType {
     
     let rawValue: Int
-    init(rawValue: Int) { self.rawValue = rawValue }
+    public init(rawValue: Int) { self.rawValue = rawValue }
     
     static let Center = UIImageViewAlignmentMask(rawValue: 0)
     static let Left = UIImageViewAlignmentMask(rawValue: 1)
@@ -27,13 +27,13 @@ public struct UIImageViewAlignmentMask: OptionSetType {
 
 public class UIImageViewAligned: UIImageView {
     
-    var alignment: UIImageViewAlignmentMask = .Center {
+    public var alignment: UIImageViewAlignmentMask = .Center {
         didSet {
             if alignment == oldValue { return }
             setNeedsLayout()
         }
     }
-    override var image: UIImage? {
+    public override var image: UIImage? {
         set {
             realImageView?.image = newValue
             setNeedsLayout()
@@ -42,29 +42,29 @@ public class UIImageViewAligned: UIImageView {
             return realImageView?.image
         }
     }
-    var enableScaleUp = false
-    var enableScaleDown = false
+    public var enableScaleUp = false
+    public var enableScaleDown = false
     
     private var realImageView: UIImageView?
     
     // MARK: - Initializers
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
     
-    override init(image: UIImage?) {
+    public override init(image: UIImage?) {
         super.init(image: image)
         commonInit()
     }
     
-    override init(image: UIImage?, highlightedImage: UIImage?) {
+    public override init(image: UIImage?, highlightedImage: UIImage?) {
         super.init(image: image, highlightedImage: highlightedImage)
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -80,7 +80,7 @@ public class UIImageViewAligned: UIImageView {
         }
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         let realSize = realContentSize()
         
         var realFrame = CGRect(x: (bounds.size.width - realSize.width) / 2.0,
@@ -158,7 +158,7 @@ public class UIImageViewAligned: UIImageView {
     
     // MARK: - UIImageView overloads
     
-    override var highlighted: Bool {
+    public override var highlighted: Bool {
         set {
             super.highlighted = newValue
             layer.contents = nil
