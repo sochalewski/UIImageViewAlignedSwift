@@ -13,15 +13,15 @@ public struct UIImageViewAlignmentMask: OptionSetType {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
-    static let Center = UIImageViewAlignmentMask(rawValue: 0)
-    static let Left = UIImageViewAlignmentMask(rawValue: 1)
-    static let Right = UIImageViewAlignmentMask(rawValue: 2)
-    static let Top = UIImageViewAlignmentMask(rawValue: 4)
-    static let Bottom = UIImageViewAlignmentMask(rawValue: 8)
-    static let TopLeft: UIImageViewAlignmentMask = [Top, Left]
-    static let TopRight: UIImageViewAlignmentMask = [Top, Right]
-    static let BottomLeft: UIImageViewAlignmentMask = [Bottom, Left]
-    static let BottomRight: UIImageViewAlignmentMask = [Bottom, Right]
+    public static let Center = UIImageViewAlignmentMask(rawValue: 0)
+    public static let Left = UIImageViewAlignmentMask(rawValue: 1)
+    public static let Right = UIImageViewAlignmentMask(rawValue: 2)
+    public static let Top = UIImageViewAlignmentMask(rawValue: 4)
+    public static let Bottom = UIImageViewAlignmentMask(rawValue: 8)
+    public static let TopLeft: UIImageViewAlignmentMask = [Top, Left]
+    public static let TopRight: UIImageViewAlignmentMask = [Top, Right]
+    public static let BottomLeft: UIImageViewAlignmentMask = [Bottom, Left]
+    public static let BottomRight: UIImageViewAlignmentMask = [Bottom, Right]
     
 }
 
