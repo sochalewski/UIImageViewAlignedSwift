@@ -87,9 +87,7 @@ public class UIImageViewAligned: UIImageView {
             y: (bounds.size.height - realSize.height) / 2.0,
             width: realSize.width,
             height: realSize.height)
-        
-        print(alignment)
-        
+                
         if alignment.contains(.Left) {
             realFrame.origin.x = 0.0
         } else if alignment.contains(.Right)  {
