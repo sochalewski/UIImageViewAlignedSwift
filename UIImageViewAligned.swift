@@ -10,7 +10,7 @@ import UIKit
 
 public struct UIImageViewAlignmentMask: OptionSetType {
     
-    let rawValue: Int
+    public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
     static let Center = UIImageViewAlignmentMask(rawValue: 0)
