@@ -13,12 +13,17 @@ Swift 2.x, iOS 8+
 
 ## Installation
 
-UIImageViewAlignedSwift is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+### [CocoaPods](http://cocoapods.org)
+
+To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod "UIImageViewAlignedSwift"
 ```
+
+### [Carthage](https://github.com/Carthage/Carthage)
+
+Add `github "sochalewski/UIImageViewAlignedSwift"` to your Cartfile
 
 ## What is it?
 
