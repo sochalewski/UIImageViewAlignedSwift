@@ -55,7 +55,7 @@ To integrate UIImageViewAlignedSwift into your Xcode project using Carthage, spe
 github "sochalewski/UIImageViewAlignedSwift" ~> 0.1
 ```
 
-Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
+Run `carthage update` to build the framework and drag the built `UIImageViewAlignedSwift.framework` into your Xcode project.
 
 ## What is it?
 
