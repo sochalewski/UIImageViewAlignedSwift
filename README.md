@@ -3,6 +3,7 @@
 [![Version](https://img.shields.io/cocoapods/v/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
 [![License](https://img.shields.io/cocoapods/l/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
 [![Platform](https://img.shields.io/cocoapods/p/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 ## Usage
 
@@ -13,12 +14,17 @@ Swift 2.x, iOS 8+
 
 ## Installation
 
-UIImageViewAlignedSwift is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+### [CocoaPods](http://cocoapods.org)
+
+To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod "UIImageViewAlignedSwift"
 ```
+
+### [Carthage](https://github.com/Carthage/Carthage)
+
+Add `github "sochalewski/UIImageViewAlignedSwift"` to your Cartfile
 
 ## What is it?
 
