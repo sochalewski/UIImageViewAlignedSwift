@@ -45,14 +45,14 @@ public enum UIImageViewScaling {
     /**
      The option to enable upscaling.
      
-     Used only if `contentMode` has `.Scale` preffix.
+     Used only if `contentMode` has the `.Scale` preffix.
      */
     case Up
     
     /**
      The option to enable downscaling.
      
-     Used only if `contentMode` has `.Scale` preffix.
+     Used only if `contentMode` has the `.Scale` preffix.
      */
     case Down
     
