@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Piotr Sochalewski" => "sochalewski@gmail.com" }
   s.source           = { :git => "https://github.com/sochalewski/UIImageViewAlignedSwift.git", :tag => s.version.to_s }
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files = '*.swift'
   s.frameworks = 'UIKit'
