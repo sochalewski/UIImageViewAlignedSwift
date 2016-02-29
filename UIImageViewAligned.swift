@@ -29,8 +29,9 @@ public class UIImageViewAligned: UIImageView {
     
     public var alignment: UIImageViewAlignmentMask = .Center {
         didSet {
-            if alignment == oldValue { return }
-            setNeedsLayout()
+            if alignment != oldValue {
+                updateLayout()
+            }
         }
     }
     public override var image: UIImage? {
@@ -80,14 +81,14 @@ public class UIImageViewAligned: UIImageView {
         }
     }
     
-    public override func layoutSubviews() {
+    private func updateLayout() {
         let realSize = realContentSize()
         
         var realFrame = CGRect(x: (bounds.size.width - realSize.width) / 2.0,
             y: (bounds.size.height - realSize.height) / 2.0,
             width: realSize.width,
             height: realSize.height)
-                
+        
         if alignment.contains(.Left) {
             realFrame.origin.x = 0.0
         } else if alignment.contains(.Right)  {
@@ -104,6 +105,10 @@ public class UIImageViewAligned: UIImageView {
         
         // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
         layer.contents = nil
+    }
+    
+    public override func layoutSubviews() {
+        updateLayout()
     }
     
     // MARK: - Private methods
