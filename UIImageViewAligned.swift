@@ -13,15 +13,48 @@ public struct UIImageViewAlignmentMask: OptionSetType {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
+    /// The option to align the content to the center.
     public static let Center = UIImageViewAlignmentMask(rawValue: 0)
+    /// The option to align the content to the left.
     public static let Left = UIImageViewAlignmentMask(rawValue: 1)
+    /// The option to align the content to the right.
     public static let Right = UIImageViewAlignmentMask(rawValue: 2)
+    /// The option to align the content to the top.
     public static let Top = UIImageViewAlignmentMask(rawValue: 4)
+    /// The option to align the content to the bottom.
     public static let Bottom = UIImageViewAlignmentMask(rawValue: 8)
+    /// The option to align the content to the top left.
     public static let TopLeft: UIImageViewAlignmentMask = [Top, Left]
+    /// The option to align the content to the top right.
     public static let TopRight: UIImageViewAlignmentMask = [Top, Right]
+    /// The option to align the content to the bottom left.
     public static let BottomLeft: UIImageViewAlignmentMask = [Bottom, Left]
+    /// The option to align the content to the bottom right.
     public static let BottomRight: UIImageViewAlignmentMask = [Bottom, Right]
+    
+}
+
+
+public enum UIImageViewScaling {
+    
+    /**
+     The option to disable scaling.
+     */
+    case None
+    
+    /**
+     The option to enable upscaling.
+     
+     Used only if `contentMode` has `.Scale` preffix.
+     */
+    case Up
+    
+    /**
+     The option to enable downscaling.
+     
+     Used only if `contentMode` has `.Scale` preffix.
+     */
+    case Down
     
 }
 
@@ -39,6 +72,7 @@ public class UIImageViewAligned: UIImageView {
             }
         }
     }
+    
     public override var image: UIImage? {
         set {
             realImageView?.image = newValue
@@ -48,10 +82,21 @@ public class UIImageViewAligned: UIImageView {
             return realImageView?.image
         }
     }
-    public var enableScaleUp = false
-    public var enableScaleDown = false
     
-    private var realImageView: UIImageView?
+    /**
+     The image view's scaling.
+     
+     Used only if `contentMode` has `.Scale` preffix.
+     */
+    public var scaling: UIImageViewScaling = .None
+    
+    /**
+     The inner image view.
+     
+     It should be used only when necessary.
+     Available to keep compatibility with original `UIImageViewAligned`.
+     */
+    private(set) var realImageView: UIImageView?
     
     // MARK: - Initializers
     
@@ -90,9 +135,9 @@ public class UIImageViewAligned: UIImageView {
         let realSize = realContentSize()
         
         var realFrame = CGRect(x: (bounds.size.width - realSize.width) / 2.0,
-            y: (bounds.size.height - realSize.height) / 2.0,
-            width: realSize.width,
-            height: realSize.height)
+                               y: (bounds.size.height - realSize.height) / 2.0,
+                               width: realSize.width,
+                               height: realSize.height)
         
         if alignment.contains(.Left) {
             realFrame.origin.x = 0.0
@@ -129,29 +174,18 @@ public class UIImageViewAligned: UIImageView {
         var scaleY = size.height / (realImageView?.image?.size.height)!
         
         switch contentMode {
-        case .ScaleAspectFit:
+        case .ScaleAspectFit, .ScaleAspectFill:
             var scale = min(scaleX, scaleY)
             
-            if (scale > 1.0 && enableScaleUp) || (scale < 1.0 && enableScaleDown) {
-                scale = 1.0
-            }
-            
-            size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
-            
-        case .ScaleAspectFill:
-            var scale = max(scaleX, scaleY)
-            
-            if (scale > 1.0 && enableScaleUp) || (scale < 1.0 && enableScaleDown) {
+            if (scale > 1.0 && scaling == .Up) || (scale < 1.0 && scaling == .Down) {
                 scale = 1.0
             }
             
             size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
             
         case .ScaleToFill:
-            if (scaleX > 1.0 && enableScaleUp) || (scaleX < 1.0 && enableScaleDown) {
+            if (scaleX > 1.0 && scaling == .Up) || (scaleX < 1.0 && scaling == .Down) {
                 scaleX = 1.0
-            }
-            if (scaleY > 1.0 && enableScaleUp) || (scaleY < 1.0 && enableScaleDown) {
                 scaleY = 1.0
             }
             
