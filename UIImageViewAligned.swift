@@ -27,6 +27,11 @@ public struct UIImageViewAlignmentMask: OptionSetType {
 
 public class UIImageViewAligned: UIImageView {
     
+    /**
+     The technique to use for aligning the image.
+     
+     Changes to this property can be animated.
+     */
     public var alignment: UIImageViewAlignmentMask = .Center {
         didSet {
             if alignment != oldValue {
