@@ -45,14 +45,14 @@ public enum UIImageViewScaling {
     /**
      The option to enable upscaling.
      
-     Used only if `contentMode` has the `.Scale` preffix.
+     Used only if `contentMode` has the `.Scale` prefix.
      */
     case Up
     
     /**
      The option to enable downscaling.
      
-     Used only if `contentMode` has the `.Scale` preffix.
+     Used only if `contentMode` has the `.Scale` prefix.
      */
     case Down
     
@@ -86,7 +86,7 @@ public class UIImageViewAligned: UIImageView {
     /**
      The image view's scaling.
      
-     Used only if `contentMode` has `.Scale` preffix.
+     Used only if `contentMode` has the `.Scale` prefix.
      */
     public var scaling: UIImageViewScaling = .None
     
