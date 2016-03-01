@@ -34,7 +34,6 @@ public struct UIImageViewAlignmentMask: OptionSetType {
     
 }
 
-
 public enum UIImageViewScaling {
     
     /**
@@ -158,6 +157,7 @@ public class UIImageViewAligned: UIImageView {
     }
     
     public override func layoutSubviews() {
+        super.layoutSubviews()
         updateLayout()
     }
     
@@ -208,6 +208,16 @@ public class UIImageViewAligned: UIImageView {
         get {
             return super.highlighted
         }
+    }
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        layer.contents = nil
+    }
+    
+    public override func didMoveToWindow() {
+        super.didMoveToWindow()
+        layer.contents = nil
     }
     
 }
