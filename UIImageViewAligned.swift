@@ -174,7 +174,16 @@ public class UIImageViewAligned: UIImageView {
         var scaleY = size.height / (realImageView?.image?.size.height)!
         
         switch contentMode {
-        case .ScaleAspectFit, .ScaleAspectFill:
+        case .ScaleAspectFill:
+            var scale = max(scaleX, scaleY)
+            
+            if (scale > 1.0 && scaling == .Up) || (scale < 1.0 && scaling == .Down) {
+                scale = 1.0
+            }
+            
+            size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
+            
+        case .ScaleAspectFit:
             var scale = min(scaleX, scaleY)
             
             if (scale > 1.0 && scaling == .Up) || (scale < 1.0 && scaling == .Down) {
