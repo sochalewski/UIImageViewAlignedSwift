@@ -150,7 +150,7 @@ public class UIImageViewAligned: UIImageView {
             realFrame.origin.y = CGRectGetMaxY(bounds) - realFrame.size.height
         }
         
-        realImageView?.frame = realFrame
+        realImageView?.frame = CGRectIntegral(realFrame)
         
         // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
         layer.contents = nil
