@@ -9,7 +9,6 @@
 import UIKit
 
 public struct UIImageViewAlignmentMask: OptionSetType {
-    
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
@@ -31,11 +30,9 @@ public struct UIImageViewAlignmentMask: OptionSetType {
     public static let BottomLeft: UIImageViewAlignmentMask = [Bottom, Left]
     /// The option to align the content to the bottom right.
     public static let BottomRight: UIImageViewAlignmentMask = [Bottom, Right]
-    
 }
 
 public enum UIImageViewScaling {
-    
     /**
      The option to disable scaling.
      */
@@ -54,9 +51,9 @@ public enum UIImageViewScaling {
      Used only if `contentMode` has the `.Scale` prefix.
      */
     case Down
-    
 }
 
+@IBDesignable
 public class UIImageViewAligned: UIImageView {
     
     /**
@@ -88,6 +85,62 @@ public class UIImageViewAligned: UIImageView {
      Used only if `contentMode` has the `.Scale` prefix.
      */
     public var scaling: UIImageViewScaling = .None
+    
+    /**
+     /// The option to align the content to the top.
+     
+     It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
+     */
+    @IBInspectable public var alignTop: Bool {
+        set {
+            setInspectableProperty(newValue, alignment: .Top)
+        }
+        get {
+            return getInspectableProperty(.Top)
+        }
+    }
+    
+    /**
+     /// The option to align the content to the left.
+     
+     It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
+     */
+    @IBInspectable public var alignLeft: Bool {
+        set {
+            setInspectableProperty(newValue, alignment: .Left)
+        }
+        get {
+            return getInspectableProperty(.Left)
+        }
+    }
+    
+    /**
+     /// The option to align the content to the right.
+     
+     It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
+     */
+    @IBInspectable public var alignRight: Bool {
+        set {
+            setInspectableProperty(newValue, alignment: .Right)
+        }
+        get {
+            return getInspectableProperty(.Right)
+        }
+    }
+    
+    /**
+     /// The option to align the content to the bottom.
+     
+     It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
+     */
+    @IBInspectable public var alignBottom: Bool {
+        set {
+            setInspectableProperty(newValue, alignment: .Bottom)
+        }
+        get {
+            return getInspectableProperty(.Bottom)
+        }
+    }
     
     /**
      The inner image view.
@@ -207,6 +260,18 @@ public class UIImageViewAligned: UIImageView {
         return size
     }
     
+    private func setInspectableProperty(newValue: Bool, alignment: UIImageViewAlignmentMask) {
+        if newValue {
+            self.alignment.insert(alignment)
+        } else {
+            self.alignment.remove(alignment)
+        }
+    }
+    
+    private func getInspectableProperty(alignment: UIImageViewAlignmentMask) -> Bool {
+        return self.alignment.contains(alignment)
+    }
+    
     // MARK: - UIImageView overloads
     
     public override var highlighted: Bool {
@@ -228,5 +293,4 @@ public class UIImageViewAligned: UIImageView {
         super.didMoveToWindow()
         layer.contents = nil
     }
-    
 }
