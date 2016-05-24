@@ -87,7 +87,7 @@ public class UIImageViewAligned: UIImageView {
     public var scaling: UIImageViewScaling = .None
     
     /**
-     /// The option to align the content to the top.
+     The option to align the content to the top.
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
@@ -101,7 +101,7 @@ public class UIImageViewAligned: UIImageView {
     }
     
     /**
-     /// The option to align the content to the left.
+     The option to align the content to the left.
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
@@ -115,7 +115,7 @@ public class UIImageViewAligned: UIImageView {
     }
     
     /**
-     /// The option to align the content to the right.
+     The option to align the content to the right.
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
@@ -129,7 +129,7 @@ public class UIImageViewAligned: UIImageView {
     }
     
     /**
-     /// The option to align the content to the bottom.
+     The option to align the content to the bottom.
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
