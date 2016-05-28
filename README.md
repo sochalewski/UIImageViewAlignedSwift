@@ -82,7 +82,7 @@ The `image` property of `UIImageViewAligned` is overwritten to forward the calls
 
 ## Author
 
-Piotr Sochalewski, sochalewski@gmail.com
+Sunshinejr, thesunshinejr@gmail.com, <a href="https://twitter.com/thesunshinejr">@thesunshinejr</a>
 
 ## License
 
