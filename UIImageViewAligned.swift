@@ -8,7 +8,7 @@
 
 import UIKit
 
-public struct UIImageViewAlignmentMask: OptionSetType {
+public struct UIImageViewAlignmentMask: OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
@@ -36,21 +36,21 @@ public enum UIImageViewScaling {
     /**
      The option to disable scaling.
      */
-    case None
+    case none
     
     /**
      The option to enable upscaling.
      
      Used only if `contentMode` has the `.Scale` prefix.
      */
-    case Up
+    case up
     
     /**
      The option to enable downscaling.
      
      Used only if `contentMode` has the `.Scale` prefix.
      */
-    case Down
+    case down
 }
 
 @IBDesignable
@@ -84,7 +84,7 @@ public class UIImageViewAligned: UIImageView {
      
      Used only if `contentMode` has the `.Scale` prefix.
      */
-    public var scaling: UIImageViewScaling = .None
+    public var scaling: UIImageViewScaling = .none
     
     /**
      The option to align the content to the top.
@@ -174,7 +174,7 @@ public class UIImageViewAligned: UIImageView {
     
     private func commonInit() {
         realImageView = UIImageView(frame: bounds)
-        realImageView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        realImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         realImageView?.contentMode = contentMode
         addSubview(realImageView!)
         
@@ -194,16 +194,16 @@ public class UIImageViewAligned: UIImageView {
         if alignment.contains(.Left) {
             realFrame.origin.x = 0.0
         } else if alignment.contains(.Right)  {
-            realFrame.origin.x = CGRectGetMaxX(bounds) - realFrame.size.width
+            realFrame.origin.x = bounds.maxX - realFrame.size.width
         }
         
         if alignment.contains(.Top)  {
             realFrame.origin.y = 0.0
         } else if alignment.contains(.Bottom)  {
-            realFrame.origin.y = CGRectGetMaxY(bounds) - realFrame.size.height
+            realFrame.origin.y = bounds.maxY - realFrame.size.height
         }
         
-        realImageView?.frame = CGRectIntegral(realFrame)
+        realImageView?.frame = realFrame.integral
         
         // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
         layer.contents = nil
@@ -227,26 +227,26 @@ public class UIImageViewAligned: UIImageView {
         var scaleY = size.height / (realImageView?.image?.size.height)!
         
         switch contentMode {
-        case .ScaleAspectFill:
+        case .scaleAspectFill:
             var scale = max(scaleX, scaleY)
             
-            if (scale > 1.0 && scaling == .Up) || (scale < 1.0 && scaling == .Down) {
+            if (scale > 1.0 && scaling == .up) || (scale < 1.0 && scaling == .down) {
                 scale = 1.0
             }
             
             size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
             
-        case .ScaleAspectFit:
+        case .scaleAspectFit:
             var scale = min(scaleX, scaleY)
             
-            if (scale > 1.0 && scaling == .Up) || (scale < 1.0 && scaling == .Down) {
+            if (scale > 1.0 && scaling == .up) || (scale < 1.0 && scaling == .down) {
                 scale = 1.0
             }
             
             size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
             
-        case .ScaleToFill:
-            if (scaleX > 1.0 && scaling == .Up) || (scaleX < 1.0 && scaling == .Down) {
+        case .scaleToFill:
+            if (scaleX > 1.0 && scaling == .up) || (scaleX < 1.0 && scaling == .down) {
                 scaleX = 1.0
                 scaleY = 1.0
             }
@@ -260,7 +260,7 @@ public class UIImageViewAligned: UIImageView {
         return size
     }
     
-    private func setInspectableProperty(newValue: Bool, alignment: UIImageViewAlignmentMask) {
+    private func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
         if newValue {
             self.alignment.insert(alignment)
         } else {
@@ -268,19 +268,19 @@ public class UIImageViewAligned: UIImageView {
         }
     }
     
-    private func getInspectableProperty(alignment: UIImageViewAlignmentMask) -> Bool {
+    private func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
         return self.alignment.contains(alignment)
     }
     
     // MARK: - UIImageView overloads
     
-    public override var highlighted: Bool {
+    public override var isHighlighted: Bool {
         set {
-            super.highlighted = newValue
+            super.isHighlighted = newValue
             layer.contents = nil
         }
         get {
-            return super.highlighted
+            return super.isHighlighted
         }
     }
     
