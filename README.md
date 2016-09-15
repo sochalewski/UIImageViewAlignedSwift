@@ -10,7 +10,9 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
-Swift 2.x, iOS 8+
+iOS 8.0+, tvOS 9.0+
+
+Swift 3.0
 
 ## Installation
 
@@ -25,11 +27,7 @@ $ gem install cocoapods
 To integrate UIImageViewAlignedSwift into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
-use_frameworks!
-
-pod 'UIImageViewAlignedSwift', '~> 0.1'
+pod 'UIImageViewAlignedSwift'
 ```
 
 Then, run the following command:
@@ -52,7 +50,7 @@ $ brew install carthage
 To integrate UIImageViewAlignedSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "sochalewski/UIImageViewAlignedSwift" ~> 0.1
+github "sochalewski/UIImageViewAlignedSwift"
 ```
 
 Run `carthage update` to build the framework and drag the built `UIImageViewAlignedSwift.framework` into your Xcode project.
@@ -70,7 +68,6 @@ Because there are many cool categories built on top of `UIImageView`. Subclassin
 
 For example, `AFNetworking`'s async `UIImageView` category works perfectly using this container class, and you don't have to worry about a thing.
 
-
 ## How does it work?
 
 When initialized, `UIImageViewAligned` will create a inner `UIImageView` which will actually hold the image displayed.
@@ -82,7 +79,7 @@ The `image` property of `UIImageViewAligned` is overwritten to forward the calls
 
 ## Author
 
-Piotr Sochalewski, sochalewski@gmail.com
+Piotr Sochalewski, <a href="http://sochalewski.github.io">sochalewski.github.io</a>
 
 ## License
 

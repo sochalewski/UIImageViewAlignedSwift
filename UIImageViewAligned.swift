@@ -54,14 +54,14 @@ public enum UIImageViewScaling {
 }
 
 @IBDesignable
-public class UIImageViewAligned: UIImageView {
+open class UIImageViewAligned: UIImageView {
     
     /**
      The technique to use for aligning the image.
      
      Changes to this property can be animated.
      */
-    public var alignment: UIImageViewAlignmentMask = .Center {
+    open var alignment: UIImageViewAlignmentMask = .Center {
         didSet {
             if alignment != oldValue {
                 updateLayout()
@@ -69,7 +69,7 @@ public class UIImageViewAligned: UIImageView {
         }
     }
     
-    public override var image: UIImage? {
+    open override var image: UIImage? {
         set {
             realImageView?.image = newValue
             setNeedsLayout()
@@ -84,14 +84,14 @@ public class UIImageViewAligned: UIImageView {
      
      Used only if `contentMode` has the `.Scale` prefix.
      */
-    public var scaling: UIImageViewScaling = .none
+    open var scaling: UIImageViewScaling = .none
     
     /**
      The option to align the content to the top.
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
-    @IBInspectable public var alignTop: Bool {
+    @IBInspectable open var alignTop: Bool {
         set {
             setInspectableProperty(newValue, alignment: .Top)
         }
@@ -105,7 +105,7 @@ public class UIImageViewAligned: UIImageView {
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
-    @IBInspectable public var alignLeft: Bool {
+    @IBInspectable open var alignLeft: Bool {
         set {
             setInspectableProperty(newValue, alignment: .Left)
         }
@@ -119,7 +119,7 @@ public class UIImageViewAligned: UIImageView {
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
-    @IBInspectable public var alignRight: Bool {
+    @IBInspectable open var alignRight: Bool {
         set {
             setInspectableProperty(newValue, alignment: .Right)
         }
@@ -133,7 +133,7 @@ public class UIImageViewAligned: UIImageView {
      
      It is available in Interface Builder and should not be set programmatically. Use `alignment` property if you want to set alignment outside Interface Builder.
      */
-    @IBInspectable public var alignBottom: Bool {
+    @IBInspectable open var alignBottom: Bool {
         set {
             setInspectableProperty(newValue, alignment: .Bottom)
         }
@@ -148,7 +148,7 @@ public class UIImageViewAligned: UIImageView {
      It should be used only when necessary.
      Available to keep compatibility with original `UIImageViewAligned`.
      */
-    private(set) var realImageView: UIImageView?
+    fileprivate(set) var realImageView: UIImageView?
     
     // MARK: - Initializers
     
@@ -172,7 +172,7 @@ public class UIImageViewAligned: UIImageView {
         commonInit()
     }
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         realImageView = UIImageView(frame: bounds)
         realImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         realImageView?.contentMode = contentMode
@@ -183,7 +183,7 @@ public class UIImageViewAligned: UIImageView {
         }
     }
     
-    private func updateLayout() {
+    fileprivate func updateLayout() {
         let realSize = realContentSize()
         
         var realFrame = CGRect(x: (bounds.size.width - realSize.width) / 2.0,
@@ -209,14 +209,14 @@ public class UIImageViewAligned: UIImageView {
         layer.contents = nil
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         updateLayout()
     }
     
     // MARK: - Private methods
     
-    private func realContentSize() -> CGSize {
+    fileprivate func realContentSize() -> CGSize {
         var size = bounds.size
         
         if image == nil {
@@ -260,21 +260,21 @@ public class UIImageViewAligned: UIImageView {
         return size
     }
     
-    private func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
+    fileprivate func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
         if newValue {
             self.alignment.insert(alignment)
         } else {
             self.alignment.remove(alignment)
         }
     }
-    
-    private func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
+
+    fileprivate func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
         return self.alignment.contains(alignment)
     }
     
     // MARK: - UIImageView overloads
     
-    public override var isHighlighted: Bool {
+    open override var isHighlighted: Bool {
         set {
             super.isHighlighted = newValue
             layer.contents = nil
@@ -284,12 +284,12 @@ public class UIImageViewAligned: UIImageView {
         }
     }
     
-    public override func didMoveToSuperview() {
+    open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         layer.contents = nil
     }
     
-    public override func didMoveToWindow() {
+    open override func didMoveToWindow() {
         super.didMoveToWindow()
         layer.contents = nil
     }
