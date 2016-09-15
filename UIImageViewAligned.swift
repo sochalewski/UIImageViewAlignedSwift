@@ -13,23 +13,23 @@ public struct UIImageViewAlignmentMask: OptionSet {
     public init(rawValue: Int) { self.rawValue = rawValue }
     
     /// The option to align the content to the center.
-    public static let Center = UIImageViewAlignmentMask(rawValue: 0)
+    public static let center = UIImageViewAlignmentMask(rawValue: 0)
     /// The option to align the content to the left.
-    public static let Left = UIImageViewAlignmentMask(rawValue: 1)
+    public static let left = UIImageViewAlignmentMask(rawValue: 1)
     /// The option to align the content to the right.
-    public static let Right = UIImageViewAlignmentMask(rawValue: 2)
+    public static let right = UIImageViewAlignmentMask(rawValue: 2)
     /// The option to align the content to the top.
-    public static let Top = UIImageViewAlignmentMask(rawValue: 4)
+    public static let top = UIImageViewAlignmentMask(rawValue: 4)
     /// The option to align the content to the bottom.
-    public static let Bottom = UIImageViewAlignmentMask(rawValue: 8)
+    public static let bottom = UIImageViewAlignmentMask(rawValue: 8)
     /// The option to align the content to the top left.
-    public static let TopLeft: UIImageViewAlignmentMask = [Top, Left]
+    public static let topLeft: UIImageViewAlignmentMask = [top, left]
     /// The option to align the content to the top right.
-    public static let TopRight: UIImageViewAlignmentMask = [Top, Right]
+    public static let topRight: UIImageViewAlignmentMask = [top, right]
     /// The option to align the content to the bottom left.
-    public static let BottomLeft: UIImageViewAlignmentMask = [Bottom, Left]
+    public static let bottomLeft: UIImageViewAlignmentMask = [bottom, left]
     /// The option to align the content to the bottom right.
-    public static let BottomRight: UIImageViewAlignmentMask = [Bottom, Right]
+    public static let bottomRight: UIImageViewAlignmentMask = [bottom, right]
 }
 
 public enum UIImageViewScaling {
@@ -61,7 +61,7 @@ open class UIImageViewAligned: UIImageView {
      
      Changes to this property can be animated.
      */
-    open var alignment: UIImageViewAlignmentMask = .Center {
+    open var alignment: UIImageViewAlignmentMask = .center {
         didSet {
             if alignment != oldValue {
                 updateLayout()
@@ -93,10 +93,10 @@ open class UIImageViewAligned: UIImageView {
      */
     @IBInspectable open var alignTop: Bool {
         set {
-            setInspectableProperty(newValue, alignment: .Top)
+            setInspectableProperty(newValue, alignment: .top)
         }
         get {
-            return getInspectableProperty(.Top)
+            return getInspectableProperty(.top)
         }
     }
     
@@ -107,10 +107,10 @@ open class UIImageViewAligned: UIImageView {
      */
     @IBInspectable open var alignLeft: Bool {
         set {
-            setInspectableProperty(newValue, alignment: .Left)
+            setInspectableProperty(newValue, alignment: .left)
         }
         get {
-            return getInspectableProperty(.Left)
+            return getInspectableProperty(.left)
         }
     }
     
@@ -121,10 +121,10 @@ open class UIImageViewAligned: UIImageView {
      */
     @IBInspectable open var alignRight: Bool {
         set {
-            setInspectableProperty(newValue, alignment: .Right)
+            setInspectableProperty(newValue, alignment: .right)
         }
         get {
-            return getInspectableProperty(.Right)
+            return getInspectableProperty(.right)
         }
     }
     
@@ -135,10 +135,10 @@ open class UIImageViewAligned: UIImageView {
      */
     @IBInspectable open var alignBottom: Bool {
         set {
-            setInspectableProperty(newValue, alignment: .Bottom)
+            setInspectableProperty(newValue, alignment: .bottom)
         }
         get {
-            return getInspectableProperty(.Bottom)
+            return getInspectableProperty(.bottom)
         }
     }
     
@@ -191,15 +191,15 @@ open class UIImageViewAligned: UIImageView {
                                width: realSize.width,
                                height: realSize.height)
         
-        if alignment.contains(.Left) {
+        if alignment.contains(.left) {
             realFrame.origin.x = 0.0
-        } else if alignment.contains(.Right)  {
+        } else if alignment.contains(.right) {
             realFrame.origin.x = bounds.maxX - realFrame.size.width
         }
         
-        if alignment.contains(.Top)  {
+        if alignment.contains(.top) {
             realFrame.origin.y = 0.0
-        } else if alignment.contains(.Bottom)  {
+        } else if alignment.contains(.bottom) {
             realFrame.origin.y = bounds.maxY - realFrame.size.height
         }
         
