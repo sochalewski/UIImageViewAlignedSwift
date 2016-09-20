@@ -58,7 +58,7 @@ Run `carthage update` to build the framework and drag the built `UIImageViewAlig
 ## What is it?
 
 It is a subclass of `UIImageView` that allows you to customize the alignment of the displayed image inside the view's frame.
-This works even if the `contentMode` is set to `AspectFit`, `AspectFill` or `ScaleToFill`.
+This works even if the `contentMode` is set to `.scaleAspectFit`, `.scaleAspectFill` or `.scaleToFill`.
 
 It is rewritten to Swift based on original [UIImageViewAligned by reydanro](https://github.com/reydanro/UIImageViewAligned).
 
