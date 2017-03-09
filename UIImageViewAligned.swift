@@ -219,7 +219,7 @@ open class UIImageViewAligned: UIImageView {
     fileprivate func realContentSize() -> CGSize {
         var size = bounds.size
         
-        if image == nil {
+        if image == nil || image?.size.width == 0 || image?.size.height == 0 {
             return size
         }
         
