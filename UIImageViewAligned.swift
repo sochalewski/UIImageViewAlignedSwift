@@ -32,27 +32,6 @@ public struct UIImageViewAlignmentMask: OptionSet {
     public static let bottomRight: UIImageViewAlignmentMask = [bottom, right]
 }
 
-public enum UIImageViewScaling {
-    /**
-     The option to disable scaling.
-     */
-    case none
-    
-    /**
-     The option to enable upscaling.
-     
-     Used only if `contentMode` has the `.Scale` prefix.
-     */
-    case up
-    
-    /**
-     The option to enable downscaling.
-     
-     Used only if `contentMode` has the `.Scale` prefix.
-     */
-    case down
-}
-
 @IBDesignable
 open class UIImageViewAligned: UIImageView {
     
@@ -63,13 +42,12 @@ open class UIImageViewAligned: UIImageView {
      */
     open var alignment: UIImageViewAlignmentMask = .center {
         didSet {
-            if alignment != oldValue {
-                updateLayout()
-            }
+            guard alignment != oldValue else { return }
+            updateLayout()
         }
     }
     
-    open override var image: UIImage? {
+    override open var image: UIImage? {
         set {
             realImageView?.image = newValue
             setNeedsLayout()
@@ -79,12 +57,15 @@ open class UIImageViewAligned: UIImageView {
         }
     }
     
-    /**
-     The image view's scaling.
-     
-     Used only if `contentMode` has the `.Scale` prefix.
-     */
-    open var scaling: UIImageViewScaling = .none
+    override open var highlightedImage: UIImage? {
+        set {
+            realImageView?.highlightedImage = newValue
+            setNeedsLayout()
+        }
+        get {
+            return realImageView?.highlightedImage
+        }
+    }
     
     /**
      The option to align the content to the top.
@@ -142,54 +123,94 @@ open class UIImageViewAligned: UIImageView {
         }
     }
     
+    override open var isHighlighted: Bool {
+        set {
+            super.isHighlighted = newValue
+            layer.contents = nil
+        }
+        get {
+            return super.isHighlighted
+        }
+    }
+    
     /**
      The inner image view.
      
      It should be used only when necessary.
-     Available to keep compatibility with original `UIImageViewAligned`.
+     Accessible to keep compatibility with the original `UIImageViewAligned`.
      */
-    fileprivate(set) var realImageView: UIImageView?
+    private(set) var realImageView: UIImageView?
     
-    // MARK: - Initializers
-    
+    private var realContentSize: CGSize {
+        var size = bounds.size
+        
+        guard let image = image else { return size }
+        
+        let scaleX = size.width / image.size.width
+        let scaleY = size.height / image.size.height
+        
+        switch contentMode {
+        case .scaleAspectFill:
+            let scale = max(scaleX, scaleY)
+            size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+            
+        case .scaleAspectFit:
+            let scale = min(scaleX, scaleY)
+            size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+            
+        case .scaleToFill:
+            size = CGSize(width: image.size.width * scaleX, height: image.size.height * scaleY)
+            
+        default:
+            size = image.size
+        }
+        
+        return size
+    }
+        
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+        setup()
     }
     
     public override init(image: UIImage?) {
         super.init(image: image)
-        commonInit()
+        setup(image: image)
     }
     
     public override init(image: UIImage?, highlightedImage: UIImage?) {
         super.init(image: image, highlightedImage: highlightedImage)
-        commonInit()
+        setup(image: image, highlightedImage: highlightedImage)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        setup()
     }
     
-    fileprivate func commonInit() {
-        realImageView = UIImageView(frame: bounds)
+    override open func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        layer.contents = nil
+    }
+    
+    override open func didMoveToWindow() {
+        super.didMoveToWindow()
+        layer.contents = nil
+    }
+    
+    private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
+        realImageView = UIImageView(image: image, highlightedImage: highlightedImage)
+        realImageView?.frame = bounds
         realImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         realImageView?.contentMode = contentMode
         addSubview(realImageView!)
-        
-        if super.image != nil {
-            swap(&image, &super.image)
-        }
     }
     
-    fileprivate func updateLayout() {
-        let realSize = realContentSize()
-        
-        var realFrame = CGRect(x: (bounds.size.width - realSize.width) / 2.0,
-                               y: (bounds.size.height - realSize.height) / 2.0,
-                               width: realSize.width,
-                               height: realSize.height)
+    private func updateLayout() {
+        let realSize = realContentSize
+        var realFrame = CGRect(origin: CGPoint(x: (bounds.size.width - realSize.width) / 2.0,
+                                               y: (bounds.size.height - realSize.height) / 2.0),
+                               size: realSize)
         
         if alignment.contains(.left) {
             realFrame.origin.x = 0.0
@@ -209,88 +230,21 @@ open class UIImageViewAligned: UIImageView {
         layer.contents = nil
     }
     
-    open override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
+        layoutIfNeeded()
         updateLayout()
     }
     
-    // MARK: - Private methods
-    
-    fileprivate func realContentSize() -> CGSize {
-        var size = bounds.size
-        
-        if image == nil {
-            return size
-        }
-        
-        var scaleX = size.width / (realImageView?.image?.size.width)!
-        var scaleY = size.height / (realImageView?.image?.size.height)!
-        
-        switch contentMode {
-        case .scaleAspectFill:
-            var scale = max(scaleX, scaleY)
-            
-            if (scale > 1.0 && scaling == .up) || (scale < 1.0 && scaling == .down) {
-                scale = 1.0
-            }
-            
-            size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
-            
-        case .scaleAspectFit:
-            var scale = min(scaleX, scaleY)
-            
-            if (scale > 1.0 && scaling == .up) || (scale < 1.0 && scaling == .down) {
-                scale = 1.0
-            }
-            
-            size = CGSize(width: (realImageView?.image?.size.width)! * scale, height: (realImageView?.image?.size.height)! * scale)
-            
-        case .scaleToFill:
-            if (scaleX > 1.0 && scaling == .up) || (scaleX < 1.0 && scaling == .down) {
-                scaleX = 1.0
-                scaleY = 1.0
-            }
-            
-            size = CGSize(width: (realImageView?.image?.size.width)! * scaleX, height: (realImageView?.image?.size.height)! * scaleY)
-            
-        default:
-            size = (realImageView?.image?.size)!
-        }
-        
-        return size
-    }
-    
-    fileprivate func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
+    private func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
         if newValue {
             self.alignment.insert(alignment)
         } else {
             self.alignment.remove(alignment)
         }
     }
-
-    fileprivate func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
+    
+    private func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
         return self.alignment.contains(alignment)
-    }
-    
-    // MARK: - UIImageView overloads
-    
-    open override var isHighlighted: Bool {
-        set {
-            super.isHighlighted = newValue
-            layer.contents = nil
-        }
-        get {
-            return super.isHighlighted
-        }
-    }
-    
-    open override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        layer.contents = nil
-    }
-    
-    open override func didMoveToWindow() {
-        super.didMoveToWindow()
-        layer.contents = nil
     }
 }
