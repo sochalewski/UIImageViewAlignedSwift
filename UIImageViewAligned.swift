@@ -47,7 +47,7 @@ open class UIImageViewAligned: UIImageView {
         }
     }
     
-    override open var image: UIImage? {
+    open override var image: UIImage? {
         set {
             realImageView?.image = newValue
             setNeedsLayout()
@@ -57,7 +57,7 @@ open class UIImageViewAligned: UIImageView {
         }
     }
     
-    override open var highlightedImage: UIImage? {
+    open override var highlightedImage: UIImage? {
         set {
             realImageView?.highlightedImage = newValue
             setNeedsLayout()
@@ -123,7 +123,7 @@ open class UIImageViewAligned: UIImageView {
         }
     }
     
-    override open var isHighlighted: Bool {
+    open override var isHighlighted: Bool {
         set {
             super.isHighlighted = newValue
             layer.contents = nil
@@ -167,7 +167,7 @@ open class UIImageViewAligned: UIImageView {
         
         return size
     }
-        
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -188,18 +188,24 @@ open class UIImageViewAligned: UIImageView {
         setup()
     }
     
-    override open func didMoveToSuperview() {
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutIfNeeded()
+        updateLayout()
+    }
+    
+    open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         layer.contents = nil
     }
     
-    override open func didMoveToWindow() {
+    open override func didMoveToWindow() {
         super.didMoveToWindow()
         layer.contents = nil
     }
     
     private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
-        realImageView = UIImageView(image: image, highlightedImage: highlightedImage)
+        realImageView = UIImageView(image: image ?? super.image, highlightedImage: highlightedImage ?? super.highlightedImage)
         realImageView?.frame = bounds
         realImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         realImageView?.contentMode = contentMode
@@ -228,12 +234,6 @@ open class UIImageViewAligned: UIImageView {
         
         // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
         layer.contents = nil
-    }
-    
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-        layoutIfNeeded()
-        updateLayout()
     }
     
     private func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
