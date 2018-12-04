@@ -2,7 +2,6 @@
 //  UIImageViewAligned.swift
 //  UIImageViewAlignedSwift
 //
-//  Created by Piotr Sochalewski on 08.02.2016.
 //  MIT License.
 //
 
@@ -139,7 +138,7 @@ open class UIImageViewAligned: UIImageView {
      It should be used only when necessary.
      Accessible to keep compatibility with the original `UIImageViewAligned`.
      */
-    private(set) var realImageView: UIImageView?
+    public private(set) var realImageView: UIImageView?
     
     private var realContentSize: CGSize {
         var size = bounds.size
