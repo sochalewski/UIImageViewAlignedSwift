@@ -238,6 +238,7 @@ open class UIImageViewAligned: UIImageView {
         
         // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
         layer.contents = nil
+        if #available(iOS 13, *) { return }
         if #available(iOS 11, *) {
             super.image = nil
         }
