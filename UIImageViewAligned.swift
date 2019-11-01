@@ -195,17 +195,19 @@ open class UIImageViewAligned: UIImageView {
     
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        layer.contents = nil
+        invalidateContents()
     }
     
     open override func didMoveToWindow() {
         super.didMoveToWindow()
-        layer.contents = nil
+
         if #available(iOS 11, *) {
             let currentImage = realImageView?.image
             image = nil
             realImageView?.image = currentImage
         }
+        
+        invalidateContents()
     }
     
     private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
@@ -235,11 +237,16 @@ open class UIImageViewAligned: UIImageView {
         }
         
         realImageView?.frame = realFrame.integral
-        
-        // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
-        layer.contents = nil
-        if #available(iOS 11, *) {
-            super.image = nil
+        invalidateContents()
+    }
+    
+    private func invalidateContents() {
+        if #available(iOS 13, *) {
+           self.layer.contents = CALayer()
+        } else if #available(iOS 11, *) {
+           super.image = nil
+        } else {
+           layer.contents = nil
         }
     }
     
