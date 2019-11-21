@@ -216,6 +216,8 @@ open class UIImageViewAligned: UIImageView {
         realImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         realImageView?.contentMode = contentMode
         addSubview(realImageView!)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     private func updateLayout() {
@@ -260,5 +262,9 @@ open class UIImageViewAligned: UIImageView {
     
     private func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
         return self.alignment.contains(alignment)
+    }
+    
+    @objc private func willEnterForeground(_ notification: Notification) {
+        invalidateContents()
     }
 }
