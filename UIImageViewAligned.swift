@@ -185,14 +185,6 @@ open class UIImageViewAligned: UIView {
         updateLayout()
     }
 
-    open override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-    }
-
-    open override func didMoveToWindow() {
-        super.didMoveToWindow()
-    }
-
     private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
         imageView = UIImageView(image: image , highlightedImage: highlightedImage)
         imageView?.frame = bounds
