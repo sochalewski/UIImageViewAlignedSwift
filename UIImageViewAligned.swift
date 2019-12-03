@@ -210,6 +210,11 @@ open class UIImageViewAligned: UIImageView {
         invalidateContents()
     }
     
+    open override func tintColorDidChange() {
+        super.tintColorDidChange()
+        invalidateContents()
+    }
+    
     private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
         realImageView = UIImageView(image: image ?? super.image, highlightedImage: highlightedImage ?? super.highlightedImage)
         realImageView?.frame = bounds
