@@ -14,13 +14,13 @@ public struct UIImageViewAlignmentMask: OptionSet {
     /// The option to align the content to the center.
     public static let center = UIImageViewAlignmentMask(rawValue: 0)
     /// The option to align the content to the left.
-    public static let left = UIImageViewAlignmentMask(rawValue: 1)
+    public static let left = UIImageViewAlignmentMask(rawValue: 1 << 0)
     /// The option to align the content to the right.
-    public static let right = UIImageViewAlignmentMask(rawValue: 2)
+    public static let right = UIImageViewAlignmentMask(rawValue: 1 << 1)
     /// The option to align the content to the top.
-    public static let top = UIImageViewAlignmentMask(rawValue: 4)
+    public static let top = UIImageViewAlignmentMask(rawValue: 1 << 2)
     /// The option to align the content to the bottom.
-    public static let bottom = UIImageViewAlignmentMask(rawValue: 8)
+    public static let bottom = UIImageViewAlignmentMask(rawValue: 1 << 3)
     /// The option to align the content to the top left.
     public static let topLeft: UIImageViewAlignmentMask = [top, left]
     /// The option to align the content to the top right.
