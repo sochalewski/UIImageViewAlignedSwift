@@ -203,7 +203,7 @@ open class UIImageViewAligned: UIImageView {
         layer.contents = nil
         if #available(iOS 11, *) {
             let currentImage = realImageView?.image
-            image = nil
+            image = UIImage()
             realImageView?.image = currentImage
         }
     }
@@ -239,7 +239,7 @@ open class UIImageViewAligned: UIImageView {
         // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
         layer.contents = nil
         if #available(iOS 11, *) {
-            super.image = nil
+            super.image = UIImage()
         }
     }
     
