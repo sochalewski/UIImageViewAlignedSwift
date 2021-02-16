@@ -218,9 +218,12 @@ open class UIImageViewAligned: UIImageView {
     
     private func updateLayout() {
         let realSize = realContentSize
-        var realFrame = CGRect(origin: CGPoint(x: (bounds.size.width - realSize.width) / 2.0,
-                                               y: (bounds.size.height - realSize.height) / 2.0),
-                               size: realSize)
+        var realFrame = CGRect(
+            origin: CGPoint(
+                x: (bounds.size.width - realSize.width) / 2.0,
+                y: (bounds.size.height - realSize.height) / 2.0),
+            size: realSize
+        )
         
         if alignment.contains(.left) {
             realFrame.origin.x = 0.0
