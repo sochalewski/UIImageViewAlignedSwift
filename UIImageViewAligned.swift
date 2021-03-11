@@ -190,7 +190,12 @@ open class UIImageViewAligned: UIView {
         imageView?.frame = bounds
         imageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         imageView?.contentMode = contentMode
-        addSubview(imageView!)
+         let newImageView = UIImageView(image: image , highlightedImage: highlightedImage)
+         newImageView.frame = bounds
+         newImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+         newImageView.contentMode = contentMode
+         addSubview(newImageView)
+         imageView = newImageView
     }
 
     private func updateLayout() {
