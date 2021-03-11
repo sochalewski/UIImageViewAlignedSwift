@@ -14,13 +14,13 @@ public struct UIImageViewAlignmentMask: OptionSet {
     /// The option to align the content to the center.
     public static let center = UIImageViewAlignmentMask(rawValue: 0)
     /// The option to align the content to the left.
-    public static let left = UIImageViewAlignmentMask(rawValue: 1)
+    public static let left = UIImageViewAlignmentMask(rawValue: 1 << 0)
     /// The option to align the content to the right.
-    public static let right = UIImageViewAlignmentMask(rawValue: 2)
+    public static let right = UIImageViewAlignmentMask(rawValue: 1 << 1)
     /// The option to align the content to the top.
-    public static let top = UIImageViewAlignmentMask(rawValue: 4)
+    public static let top = UIImageViewAlignmentMask(rawValue: 1 << 2)
     /// The option to align the content to the bottom.
-    public static let bottom = UIImageViewAlignmentMask(rawValue: 8)
+    public static let bottom = UIImageViewAlignmentMask(rawValue: 1 << 3)
     /// The option to align the content to the top left.
     public static let topLeft: UIImageViewAlignmentMask = [top, left]
     /// The option to align the content to the top right.
@@ -185,6 +185,21 @@ open class UIImageViewAligned: UIView {
         updateLayout()
     }
 
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        layer.contents = nil
+    }
+    
+    open override func didMoveToWindow() {
+        super.didMoveToWindow()
+        layer.contents = nil
+        if #available(tvOS 11, iOS 11, *) {
+            let currentImage = realImageView?.image
+            image = UIImage()
+            realImageView?.image = currentImage
+        }
+    }
+
     private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
         imageView = UIImageView(image: image , highlightedImage: highlightedImage)
         imageView?.frame = bounds
@@ -200,7 +215,13 @@ open class UIImageViewAligned: UIView {
 
     private func updateLayout() {
         let realSize = realContentSize
-        var realFrame = CGRect(origin: CGPoint(x: (bounds.size.width - realSize.width) / 2.0, y: (bounds.size.height - realSize.height) / 2.0), size: realSize)
+
+        var realFrame = CGRect(
+            origin: CGPoint(
+                x: (bounds.size.width - realSize.width) / 2.0,
+                y: (bounds.size.height - realSize.height) / 2.0),
+            size: realSize
+        )
 
         if alignment.contains(.left) {
             realFrame.origin.x = 0.0
@@ -213,8 +234,15 @@ open class UIImageViewAligned: UIView {
         } else if alignment.contains(.bottom) {
             realFrame.origin.y = bounds.maxY - realFrame.size.height
         }
+        
+        realImageView?.frame = realFrame.integral
+        
+        // Make sure we clear the contents of this container layer, since it refreshes from the image property once in a while.
+        layer.contents = nil
+        if #available(tvOS 11, iOS 11, *) {
+            super.image = UIImage()
+        }
 
-        imageView?.frame = realFrame.integral
     }
 
     private func setInspectableProperty(_ newValue: Bool, alignment: UIImageViewAlignmentMask) {
