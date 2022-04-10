@@ -3,7 +3,8 @@
 [![Version](https://img.shields.io/cocoapods/v/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
 [![License](https://img.shields.io/cocoapods/l/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
 [![Platform](https://img.shields.io/cocoapods/p/UIImageViewAlignedSwift.svg?style=flat)](http://cocoapods.org/pods/UIImageViewAlignedSwift)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift_Package_Manager-compatible-4BC51D.svg)](https://www.swift.org/package-manager/)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
 
 ## Usage
 
@@ -14,6 +15,14 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 * Swift 5.x
 
 ## Installation
+
+### Package Manager
+
+You can add UIImageViewAlignedSwift to an Xcode project by adding it as a package dependency.
+
+  1. From the **File** menu, select **Add Packages…**
+  2. Enter `https://github.com/sochalewski/UIImageViewAlignedSwift` into the package repository URL text field.
+  3. Add the package to your app target.
 
 ### CocoaPods
 
