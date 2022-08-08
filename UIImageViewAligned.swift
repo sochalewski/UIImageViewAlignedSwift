@@ -209,6 +209,7 @@ open class UIImageViewAligned: UIImageView {
     }
     
     private func setup(image: UIImage? = nil, highlightedImage: UIImage? = nil) {
+        addRotationObserver()
         realImageView = UIImageView(image: image ?? super.image, highlightedImage: highlightedImage ?? super.highlightedImage)
         realImageView?.frame = bounds
         realImageView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -216,7 +217,11 @@ open class UIImageViewAligned: UIImageView {
         addSubview(realImageView!)
     }
     
-    private func updateLayout() {
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc public func updateLayout() {
         let realSize = realContentSize
         var realFrame = CGRect(
             origin: CGPoint(
@@ -256,5 +261,10 @@ open class UIImageViewAligned: UIImageView {
     
     private func getInspectableProperty(_ alignment: UIImageViewAlignmentMask) -> Bool {
         return self.alignment.contains(alignment)
+    }
+    
+    private func addRotationObserver() {
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLayout), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 }
